@@ -1,19 +1,19 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.viewsets import ModelViewSet
 from django.db.models.aggregates import Count
 from .models import Product, Collection
 from .serializers import ProductSerializer, CollectionSerializer
 
-class ProductList(ListCreateAPIView):
-    queryset = Product.objects.select_related('collection').all()
-    serializer_class = ProductSerializer
 
-
-class ProductDetail(RetrieveUpdateDestroyAPIView):
+class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    def get_serializer_context(self):
+        return {'request': self.request}
+    
     def delete(self, request, *args, **kwargs):
         product = self.get_object()
         if product.orderitem_set.count() > 0:
@@ -22,15 +22,10 @@ class ProductDetail(RetrieveUpdateDestroyAPIView):
                 status=status.HTTP_405_METHOD_NOT_ALLOWED
             )
         return super().delete(request, *args, **kwargs)
+    
 
-
-class CollectionList(ListCreateAPIView):
+class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(products_count=Count('product')).all()
-    serializer_class = CollectionSerializer
-
-
-class CollectionDetail(RetrieveUpdateDestroyAPIView):
-    queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
 
     def delete(self, request, *args, **kwargs):
@@ -41,3 +36,5 @@ class CollectionDetail(RetrieveUpdateDestroyAPIView):
                 status=status.HTTP_405_METHOD_NOT_ALLOWED
             )
         return super().delete(request, *args, **kwargs)
+
+    

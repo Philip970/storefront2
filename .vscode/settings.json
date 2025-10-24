@@ -1,0 +1,13 @@
+{
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}"
+  ],
+  "python.envFile": "${workspaceFolder}/.env",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
+}
+

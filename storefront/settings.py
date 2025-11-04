@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'playground',
     'debug_toolbar',
-    'store',
-    'store_custom',
+    'core',
     'tags',
-    'likes'
+    'likes',
+    'store'
 ]
 
 MIDDLEWARE = [
@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'storefront.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'storefront2',
+        'NAME': 'storefront3',
         'HOST': '127.0.0.1',
         'USER': 'postgres',
         'PORT': '5432',
@@ -103,7 +103,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+""" AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
+] """
 
 
 # Internationalization
@@ -148,3 +148,5 @@ REST_FRAMEWORK = {
     #'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     #'PAGE_SIZE': 10
 }
+
+AUTH_USER_MODEL = 'core.user'
